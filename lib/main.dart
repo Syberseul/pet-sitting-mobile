@@ -52,7 +52,6 @@ void main() async {
     debugPrint("初始化失败: $e");
     debugPrint("堆栈跟踪: $stackTrace");
 
-    // 可选：显示错误界面或回退逻辑
     runApp(
       const MaterialApp(
         home: Scaffold(

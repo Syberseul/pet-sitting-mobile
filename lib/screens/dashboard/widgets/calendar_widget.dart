@@ -88,6 +88,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     await loadTours(fetchFromApi: true, showLoadingIndicator: false);
   }
 
+  Future<void> _refreshData() async {
+    loadTours(fetchFromApi: true, showLoadingIndicator: false);
+    loadOwners(fetchFromApi: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CalendarControllerProvider(
@@ -111,27 +116,37 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           }
 
           return Scaffold(
-            body: MonthView(
-              key: ValueKey(_eventController.allEvents.length),
-              cellBuilder: (
-                date,
-                events,
-                isToday,
-                isInMonth,
-                hideDaysNotInMonth,
-              ) {
-                return InkWell(
-                  splashColor: Colors.red,
-                  child: MonthViewSlot(
-                    date: date,
-                    events: events,
-                    isToday: isToday,
-                    isInMonth: isInMonth,
-                    hideDaysNotInMonth: hideDaysNotInMonth,
-                    handleNewTourAdded: handleNewTourAdded,
-                  ),
-                );
-              },
+            body: RefreshIndicator(
+              onRefresh: _refreshData,
+              child: CustomScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    child: MonthView(
+                      key: ValueKey(_eventController.allEvents.length),
+                      cellBuilder: (
+                          date,
+                          events,
+                          isToday,
+                          isInMonth,
+                          hideDaysNotInMonth,
+                          ) {
+                        return InkWell(
+                          splashColor: Colors.red,
+                          child: MonthViewSlot(
+                            date: date,
+                            events: events,
+                            isToday: isToday,
+                            isInMonth: isInMonth,
+                            hideDaysNotInMonth: hideDaysNotInMonth,
+                            handleNewTourAdded: handleNewTourAdded,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
             floatingActionButton: SpeedDial(
               overlayOpacity: 0.2,
@@ -140,7 +155,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               gradientBoxShape: BoxShape.circle,
               children: <SpeedDialChild>[
                 SpeedDialChild(
-                  label: AppLocalizations.getText(context, TranslateEnum.addTour),
+                  label: AppLocalizations.getText(
+                    context,
+                    TranslateEnum.addTour,
+                  ),
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -161,7 +179,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   child: Icon(Icons.tour, color: Colors.white),
                 ),
                 SpeedDialChild(
-                  label: AppLocalizations.getText(context, TranslateEnum.addOwner),
+                  label: AppLocalizations.getText(
+                    context,
+                    TranslateEnum.addOwner,
+                  ),
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
