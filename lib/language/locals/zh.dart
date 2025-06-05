@@ -67,6 +67,7 @@ final Map<TranslateEnum, String> zh = {
   TranslateEnum.noDogOwnerText: "目前没有可用的宠物主人\n请先创建一位宠物主人",
   TranslateEnum.settings: "设置",
   TranslateEnum.languageSetting: "应用语言",
+  TranslateEnum.notificationSetting: "接收提醒",
   TranslateEnum.role: "身份",
   TranslateEnum.userRoleAdmin: "行政人员",
   TranslateEnum.userRoleDeveloper: "开发人员",

@@ -65,6 +65,7 @@ enum TranslateEnum {
   noDogOwnerText,
   settings,
   languageSetting,
+  notificationSetting,
   userRoleAdmin,
   userRoleDeveloper,
   userRoleDogOwner,

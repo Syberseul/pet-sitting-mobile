@@ -67,6 +67,7 @@ final Map<TranslateEnum, String> en = {
   TranslateEnum.noDogOwnerText: "There is no valid dog owners detected\nPlease create a dog owner first",
   TranslateEnum.settings: "Settings",
   TranslateEnum.languageSetting: "Language Setting",
+  TranslateEnum.notificationSetting: "Receive Notification",
   TranslateEnum.role: "Role",
   TranslateEnum.userRoleAdmin: "Admin",
   TranslateEnum.userRoleDeveloper: "Developer",

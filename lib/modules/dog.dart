@@ -1,5 +1,3 @@
-import 'package:flutter_projects/constants/enum.dart';
-
 class Dog {
   late String _id;
   late final String _dogName;

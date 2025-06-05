@@ -30,7 +30,7 @@ class ApiGet {
         headers: {
           ..._headerConfig,
           ...?headers,
-          "authorization": "Bearer ${userInfo!.token}",
+          "authorization": "Bearer ${userInfo.token}",
         },
       );
 

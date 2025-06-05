@@ -33,7 +33,7 @@ class ApiPut {
           ...?headers,
           "authorization": "Bearer ${userInfo!.token}",
         },
-        body: jsonEncode(body)
+        body: jsonEncode(body),
       );
 
       final data = jsonDecode(response.body);
@@ -67,8 +67,8 @@ class ApiPut {
   }
 
   static Future<Map<String, dynamic>> updateTour({
-    required Tour tourInfo
-}) async {
+    required Tour tourInfo,
+  }) async {
     try {
       final response = await putRequest(
         endpoint: "tour/updateTour/${tourInfo.id}",
@@ -77,6 +77,22 @@ class ApiPut {
       return response;
     } catch (err) {
       throw Exception("Failed to update tour: $err");
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateReceiveNotification({
+    required String userId,
+    required bool receivable,
+  }) async {
+    try {
+      final response = await putRequest(
+        endpoint:
+            "users/toggleUserReceiveNotification/$userId/${receivable ? '1' : '0'}",
+        body: {},
+      );
+      return response;
+    } catch (err) {
+      throw Exception("Failed to change user notice receivable: $err");
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:colorful_print/colorful_print.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_projects/modules/user.dart';
 
@@ -17,7 +18,8 @@ class AuthProvider with ChangeNotifier, DiagnosticableTreeMixin {
     String? email,
     String? token,
     String? refreshToken,
-    List<String>? fcmTokens
+    List<String>? fcmTokens,
+    bool? receiveNotifications,
   }) {
     if (_userInfo != null) {
       _userInfo = _userInfo!.copyWith(
@@ -25,6 +27,7 @@ class AuthProvider with ChangeNotifier, DiagnosticableTreeMixin {
           token: token,
           refreshToken: refreshToken,
           fcmTokens: fcmTokens,
+        receiveNotifications: receiveNotifications
       );
       notifyListeners();
     }

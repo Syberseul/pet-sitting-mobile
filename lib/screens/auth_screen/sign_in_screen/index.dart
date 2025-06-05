@@ -123,33 +123,33 @@ class _SignInScreenState extends State<SignInScreen> {
       });
     }
 
-    if (isValidEmail && password.length >= 6) {
-      try {
-        final response = await ApiPost.login(
-          context: context,
-          email: email,
-          password: password,
-          rememberMe: rememberMe,
-          fcmToken: fcmToken,
-        );
+    if (!isValidEmail || password.length < 6) return;
 
-        if (response["error"] != null &&
-            response["error"].toString().isNotEmpty) {
-          printColor("${response["error"]}", textColor: TextColor.red);
-          submitBtnController.error();
-        } else {
-          if (mounted) {
-            context.read<AuthProvider>().setUser(
-              User.fromApiResponse(response),
-            );
-            submitBtnController.success();
-            Navigator.pushNamed(context, Routes.dashboardScreen);
-          }
-        }
-      } catch (err) {
-        printColor("ERROR: $err", textColor: TextColor.red);
+    try {
+      final response = await ApiPost.login(
+        context: context,
+        email: email,
+        password: password,
+        rememberMe: rememberMe,
+        fcmToken: fcmToken,
+      );
+
+      if (response["error"] != null &&
+          response["error"].toString().isNotEmpty) {
+        printColor("${response["error"]}", textColor: TextColor.red);
         submitBtnController.error();
+      } else {
+        if (mounted) {
+          context.read<AuthProvider>().setUser(
+            User.fromApiResponse(response),
+          );
+          submitBtnController.success();
+          Navigator.pushNamed(context, Routes.dashboardScreen);
+        }
       }
+    } catch (err) {
+      printColor("ERROR: $err", textColor: TextColor.red);
+      submitBtnController.error();
     }
   }
 

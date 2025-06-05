@@ -83,19 +83,17 @@ class ApiPost {
 
       try {
         final customToken = response["token"];
-        final userCredential = await FirebaseAuth.FirebaseAuth.instance.signInWithCustomToken(customToken);
+        final userCredential = await FirebaseAuth.FirebaseAuth.instance
+            .signInWithCustomToken(customToken);
         final idToken = await userCredential.user!.getIdToken(true);
 
-        response = {
-          ...response,
-          "token": idToken,
-        };
+        response = {...response, "token": idToken};
 
         await Stores.cacheUserInfo(context, response, rememberMe);
 
         return response;
       } on FirebaseAuth.FirebaseAuthException catch (e) {
-        printColor("Invalid firebase auth token", textColor: TextColor.red);
+        printColor("Invalid firebase auth token: $e", textColor: TextColor.red);
         return {};
       }
     } catch (err, stack) {
